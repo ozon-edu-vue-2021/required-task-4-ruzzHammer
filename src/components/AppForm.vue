@@ -47,7 +47,7 @@
     <p class="form-subtitle">Пол</p>
     <div class="form-row">
       <radio-selection
-        :options="{ gender_male: 'Мужской', gender_female: 'Женский' }"
+        :options="{ male: 'Мужской', female: 'Женский' }"
         name="gender"
         v-model="formData.gender"
         ref="gender"
@@ -138,13 +138,13 @@
     <p class="form-subtitle">Меняли ли фамилию или имя?</p>
     <div class="form-row">
       <RadioSelection
-        :options="{ no: 'Нет', yes: 'Да' }"
+        :options="{ false: 'Нет', true: 'Да' }"
         name="haveNamesBeenChanged"
         v-model="formData.haveNamesBeenChanged"
         ref="haveNamesBeenChanged"
       />
     </div>
-    <div v-if="formData.haveNamesBeenChanged === 'Да'" class="form-row">
+    <div v-if="formData.haveNamesBeenChanged" class="form-row">
       <form-input
         id="oldFirstName"
         label="Прежнее имя"
@@ -245,7 +245,7 @@ export default {
       }
     },
     displayFilledForm() {
-      console.log(JSON.stringify(this.formData, null, 2));
+      console.log(JSON.stringify(_.omitBy(this.formData, _.isEmpty), null, 2));
     },
     getFormDataRefs() {
       let refs = [];

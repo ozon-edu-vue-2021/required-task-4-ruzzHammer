@@ -1,14 +1,14 @@
 <template>
   <div class="field radio-selection">
-    <div v-for="(option, key) in options" :key="key" class="radio">
+    <div v-for="(option, value) in options" :key="value" class="radio">
       <input
-        :value="option"
+        :value="value"
         :name="name"
         @change="checkRadio($event.target.value)"
-        :id="key"
+        :id="value"
         type="radio"
       />
-      <label :for="key">{{ option }}</label>
+      <label :for="value">{{ option }}</label>
     </div>
     <span v-if="isEmpty" class="subtip">Поле должно быть заполнено</span>
   </div>
@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     checkRadio(value) {
+      value = this.tryToBool(value);
       this.$emit('change', value);
       this.selectedValue = value;
       this.isEmpty = false;
@@ -47,6 +48,11 @@ export default {
       if (value === '') {
         this.isEmpty = true;
       }
+    },
+    tryToBool(value) {
+      if (value.toLowerCase() === 'true') return true;
+      else if (value.toLowerCase() === 'false') return false;
+      else return value;
     },
   },
 };

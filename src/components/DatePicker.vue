@@ -29,7 +29,7 @@
 
 <script>
 import ClickOutside from 'vue-click-outside';
-import todayDate from '../utils';
+import makeTodayDate from '../utils';
 
 export default {
   directives: { ClickOutside },
@@ -47,7 +47,7 @@ export default {
       default: 'Выберите дату',
     },
     maxDate: {
-      default: todayDate,
+      default: makeTodayDate,
     },
     minDate: {
       default: '1900-01-01',
