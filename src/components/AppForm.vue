@@ -174,12 +174,14 @@ import citizenships from '@/assets/data/citizenships.json';
 import { name } from 'country-emoji';
 import passports from '@/assets/data/passport-types.json';
 import {
+  FORM_DATA,
   CYRILLIC_REGEXP,
   LATIN_REGEXP,
   EMAIL_REGEXP,
   FOUR_DIGITS_REGEXP,
   SIX_DIGITS_REGEXP,
-} from './consts';
+} from '../consts';
+
 export default {
   components: {
     FormInput,
@@ -189,26 +191,7 @@ export default {
   },
   data() {
     return {
-      formData: {
-        firstName: '',
-        lastName: '',
-        thirdName: '',
-        birthday: '',
-        email: '',
-        gender: '',
-        citizenship: '',
-        russianPassportSeries: '',
-        russianPassportNumber: '',
-        firstNameLatin: '',
-        lastNameLatin: '',
-        issueDate: '',
-        foreignPassportNumber: '',
-        issueCountry: '',
-        foreignPassportType: '',
-        haveNamesBeenChanged: false,
-        oldFirstName: '',
-        oldLastName: '',
-      },
+      formData: FORM_DATA,
       regexps: {
         cyrillic: CYRILLIC_REGEXP,
         latin: LATIN_REGEXP,
@@ -216,7 +199,6 @@ export default {
         four: FOUR_DIGITS_REGEXP,
         six: SIX_DIGITS_REGEXP,
       },
-      isFormCompleted: false,
     };
   },
   methods: {
@@ -228,12 +210,39 @@ export default {
           ref.validate(ref.selectedValue); // for radioselection
         }
       });
+      this.checkFilledForm();
       if (this.checkIfEverythingFilled() === true) this.displayFilledForm();
     },
     checkIfEverythingFilled() {
       return this.getFormDataRefs().every((ref) => {
         return !ref.isEmpty && !ref.isInvalid;
       });
+    },
+    checkFilledForm() {
+      if (this.formData.citizenship === 'Russian Federation') {
+        this.formData = {
+          ...this.formData,
+          firstNameLatin: '',
+          lastNameLatin: '',
+          issueCountry: '',
+          foreignPassportNumber: '',
+        };
+      } else {
+        this.formData = {
+          ...this.formData,
+          russianPassportSeries: '',
+          russianPassportNumber: '',
+          issueDate: '',
+        };
+      }
+
+      if (this.formData.haveNamesBeenChanged === 'Нет') {
+        this.formData = {
+          ...this.formData,
+          oldFirstName: '',
+          oldLastName: '',
+        };
+      }
     },
     displayFilledForm() {
       console.log(JSON.stringify(this.formData, null, 2));

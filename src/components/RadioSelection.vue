@@ -4,7 +4,7 @@
       <input
         :value="option"
         :name="name"
-        @change="checkRadio"
+        @change="checkRadio($event.target.value)"
         :id="key"
         type="radio"
       />
@@ -38,9 +38,9 @@ export default {
     };
   },
   methods: {
-    checkRadio(event) {
-      this.$emit('change', event.target.value);
-      this.selectedValue = event.target.value;
+    checkRadio(value) {
+      this.$emit('change', value);
+      this.selectedValue = value;
       this.isEmpty = false;
     },
     validate(value) {

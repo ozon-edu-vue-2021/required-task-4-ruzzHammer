@@ -47,6 +47,7 @@
 <script>
 import ClickOutside from 'vue-click-outside';
 import _ from 'lodash';
+
 export default {
   directives: {
     ClickOutside,

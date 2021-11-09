@@ -29,6 +29,8 @@
 
 <script>
 import ClickOutside from 'vue-click-outside';
+import todayDate from '../utils';
+
 export default {
   directives: { ClickOutside },
   props: {
@@ -45,9 +47,7 @@ export default {
       default: 'Выберите дату',
     },
     maxDate: {
-      default: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
+      default: todayDate,
     },
     minDate: {
       default: '1900-01-01',
